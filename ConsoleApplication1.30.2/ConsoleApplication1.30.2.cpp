@@ -5,164 +5,168 @@
 #include <locale.h>
 #include <ctime>
 #include <string>
-//#include <fstream>
-//#include <vector>
 using namespace std;
 
-class Tree;
-class TreeBigBranche;
-class ElfVillage;
-
-class TreeMiddleBranche {
-	int elfName = 0;
-public:
-	void setElfName(int eN) {
-		elfName = eN;
-	}
-
-	int getElfName() {
-		return elfName;
-	}
-
-	TreeMiddleBranche(int intreesNumber, int innumberBigBranches, int innumberMiddleBranches, int inelfName) :elfName(inelfName) {};
+enum class Colors {
+	blue, red, green, yellow
 };
 
-class TreeBigBranche {
-	int numberMiddleBranches = 0, elfName = 0;
+class Circle {
+	double factor = atan(1), ratio=1;
+	Colors color = Colors::blue;
 public:
-	void setElfName(int eN) {
-		elfName = eN;
+	double getFactor(){
+		return factor;
+	}
+	string getColorCircle() {
+		return "blue";
+	}
+	double getRatio() {
+		return ratio;
 	}
 
-	int getElfName() {
-		return elfName;
-	}
-
-	void loadMidBr(int branches) {
-		numberMiddleBranches = branches;
-	}
-
-	int getMidBr() {
-		return numberMiddleBranches;
-	}
-
-	TreeMiddleBranche** middleBranche = nullptr;
-	TreeMiddleBranche* getmiddleBranche(int indexM) {
-		return middleBranche[indexM];
-	}
-
-	TreeBigBranche(int intreesNumber, int innumberBigBranches, int innumberMiddleBranches, int inelfName) : numberMiddleBranches(innumberMiddleBranches), elfName(inelfName) {
-		middleBranche = new TreeMiddleBranche * [innumberMiddleBranches];
-		for (int i = 0; i < innumberMiddleBranches; i++) {
-			middleBranche[i] = new TreeMiddleBranche(intreesNumber, innumberBigBranches, innumberMiddleBranches, inelfName);
-			cout << "\n средняя ветвь " << i + 1<<" имя эльфа:";
-			cin >> inelfName;
-			middleBranche[i]->setElfName(inelfName);
-		}
-	}
+	Circle() {};
 };
 
-class Tree {
-
-	int numberBigBranches = 0, numberMiddleBranches = 0, elfName =0;
+class  RegularTetragon{
+	double factor = 1, ratio=1;
+	Colors color = Colors::green;
 public:
-	void loadBigBr(int Branches) {
-		numberBigBranches = Branches;
-	};
-	int getBigBr() {
-		return numberBigBranches;
+	double getFactor() {
+		return factor;
+	}
+	string getColorRegularTetragon() {
+		return "green";
+	}
+	double getRatio() {
+		return ratio;
 	}
 
-	TreeBigBranche** bigBranche = nullptr;
-	TreeBigBranche* getbigBranche(int indexB) {
-		return bigBranche[indexB];
-	}
-
-	Tree(int intreesNumber, int innumberBigBranches, int innumberMiddleBranches, int inelfName) : numberBigBranches(innumberBigBranches), elfName(inelfName){
-		bigBranche = new TreeBigBranche * [innumberBigBranches];
-		for (int j = 0; j < innumberBigBranches; j++) {
-			innumberMiddleBranches= rand() % 2 + 2;	
-			cout << "\n большая ветвь " << j + 1;
-		   bigBranche[j] = new TreeBigBranche(intreesNumber, innumberBigBranches, innumberMiddleBranches, inelfName);
-			bigBranche[j]->loadMidBr(innumberMiddleBranches);			
-		    cout << "\n большая ветвь " << j + 1<<" имя эльфа: ";
-           cin >> inelfName;		  
-           bigBranche[j]->setElfName(inelfName);
-		}
-	}
+	RegularTetragon() {};
 };
 
-class ElfVillage {
-	int treesNumber =0, numberBigBranches=0;
+class Triangle {
+	double factor = sqrt(3) / 4, ratio= sqrt(3)/2;
+	Colors color = Colors::green;
 public:
-	Tree** tree = NULL;
-	Tree* getTree(int index) {
-		return tree[index];
+	double getFactor() {
+		return factor;
+    }
+	string getColorTriangle() {
+		return "yellow";
 	}
-	
-	ElfVillage(int intreesNumber, int innumberBigBranches, int innumberMiddleBranches, int inelfName) : treesNumber(intreesNumber) {
-		tree = new Tree * [intreesNumber];
-		for (int i = 0; i < treesNumber; ++i) {
-			srand(time(nullptr));
-			innumberBigBranches= rand() % 3 + 3;
-			cout << "\n дерево " << i + 1;
-			tree[i] = new Tree(intreesNumber, innumberBigBranches, innumberMiddleBranches, inelfName);
-			tree[i]->loadBigBr(innumberBigBranches);
-		}
+	double getRatio() {
+		return ratio;
 	}
-	
+
+	Triangle() {};
 };
 
-int main()
-{
-	setlocale(LC_ALL, "rus");
-	srand(time(nullptr));
-	int numBBr = 0, numMBr = 0, name = 0, numTr = 5, nameElf = 0;
-	cout << "\nИмена эльфов - любые целые числа кроме нуля. Если жилище эльфа на ветке отсутствует введите 0.\n";
-	srand(time(nullptr));
-				ElfVillage* elfVillage = new ElfVillage(numTr, numBBr, numMBr, name);
-	cout << "\nВведите имя искомого эльфа. ";
-	while (nameElf == 0) {
-		cin >> nameElf;
-		if (nameElf == 0) {
-			cout << "\n Таких имён у эльфов нет. Введите правильно имя. ";
-		}
+class Rectangle {
+	double parametr = 1, secondParametr = 1, factor = 1, ratio=1;
+	Colors color = Colors::green;
+public:
+	void setParametr(double par, double secondPar) {
+		parametr = par;
+		secondParametr = secondPar;
+        factor = secondParametr / parametr;
+		ratio = factor;
 	}
-int index = -1, countName=0;
-	for (int i = 0; i< numTr; ++i) {
-		for (int j = 0;j< elfVillage->getTree(i)->getBigBr();++ j) {
-			if (nameElf == elfVillage->getTree(i)->getbigBranche(j)->getElfName()) {
-				cout << "\n Искомый эльф проживает по адресу: дерево " << i + 1 << " большая ветвь " << j + 1;
-				index = i;
-				break;
-			}
-			for (int k = 0;k< elfVillage->getTree(i)->getbigBranche(j)->getMidBr();++k) {
-				if (nameElf == elfVillage->getTree(i)->getbigBranche(j)->getmiddleBranche(k)->getElfName()) {
-					cout << "\n Искомый эльф проживает по адресу: дерево " << i + 1 << " большая ветвь " << j + 1<<" средняя ветвь "<<k+1;
-					index = i;
-					break;
-				}
-			}
-		}
+
+	double getFactor() {
+		return factor;
 	}
-			if (index >= 0) {
-				for (int j = 0; j < elfVillage->getTree(index)->getBigBr(); ++j) {
-					if (elfVillage->getTree(index)->getbigBranche(j)->getElfName() != 0) {
-						countName++;
-					}
-					for (int k = 0; k < elfVillage->getTree(index)->getbigBranche(j)->getMidBr(); ++k) {
-						if (elfVillage->getTree(index)->getbigBranche(j)->getmiddleBranche(k)->getElfName() != 0) {
-							countName++;
-						}
-					}
-				}
-cout << "\nРядом с ним проживает " << countName-1 << " соседей.";
+	string getColorRectangle() {
+		return "red";
 	}
-			else if (index < 0) {
-				cout << "\nЭльфа с таким именем в деревне нет.";
-			}
+	double getRatio() {
+		return ratio;
+	}
+
+	Rectangle() {}
+};
+
+ 
+class GeometricFigures {
+	 string figureName = "";
+	 double parametr = 0, secondParametr = 0, square = 0;
+public:
+	void setFigureName(string figName) {
+		figureName = figName;
+	}
+
+	void setSecondParametr(double par, double ratio) {
+		secondParametr =ratio* par;
+	}
+
+	void setParametr (double par) {
+		parametr = par;
+	}
+
+	double getParametr() {
+		return parametr;
+	}
+	double getSecondParametr() {
+		return secondParametr;
+	}
+
+	double getSquare(double factor, double secondParametr=0) {
+		square = factor * parametr * parametr;
+		return square;
+	}
+
+	Rectangle* rectangle=new Rectangle();
+	Triangle* triangle = new Triangle();
+	RegularTetragon* regularTetragon = new RegularTetragon();
+	Circle* circle = new Circle();
+	 GeometricFigures(string infigureName, double inparametr, double insecondParametr=0) :figureName(infigureName), parametr(inparametr), secondParametr(insecondParametr){
+		 if (infigureName == "rectangle") {
+         setParametr(inparametr);		
+			 cout << "\nВведите длину второй стороны прямоугольника.";
+			 cin >> insecondParametr;
+			 rectangle->setParametr(inparametr, insecondParametr);
+			 cout << "\n Площадь фигуры равна " << getSquare((rectangle->getFactor()), insecondParametr);
+			 cout << "\n Цвет:                 " << rectangle->getColorRectangle();
+			 setSecondParametr(inparametr,rectangle->getRatio());
+		 }
+		 else if (infigureName == "square") {
+			 setParametr(inparametr);
+			 cout << "\n Площадь фигуры равна " << getSquare((regularTetragon->getFactor()), insecondParametr);
+			 cout << "\n Цвет                 " << regularTetragon->getColorRegularTetragon();
+			 setSecondParametr(inparametr, regularTetragon->getRatio());
+		 }
+		 else if (infigureName == "circle") {
+			 setParametr(inparametr);
+			 cout << "\n Площадь фигуры равна " << getSquare((circle->getFactor()), insecondParametr);
+			 cout << "\n Цвет                 " << circle->getColorCircle();
+			 setSecondParametr(inparametr,  circle->getRatio());
+		 }
+		 else if (infigureName == "triangle") {
+			 setParametr(inparametr);
+			 cout << "\n Площадь фигуры равна " << getSquare((triangle->getFactor()), insecondParametr);
+			 cout << "\n Цвет                 " << triangle->getColorTriangle();
+			 setSecondParametr(inparametr, triangle->getRatio());
+		 }
+		 cout << "\n Стороны описывающего прямоугольника: " << inparametr << " " << getSecondParametr();
+		 cout << "\n Центр описывающего прямоугольника: " << inparametr/2 << " " << getSecondParametr()/2;
+		 delete rectangle;
+		 delete regularTetragon;
+		 delete circle;
+	     delete triangle;
+	 }	
+};
+
+int main() {
+	setlocale(LC_ALL, "Russian");	
+	string geomFigure = "";
+	double figureSide = 0;
+	cout << "\nУкажите название фигуры: круг -  circle, квадрат - square, прямоугольник - rectangle, треугольник - triangle. ";
+	cin >> geomFigure;
+	cout << "\nУкажите длину стороны (для круга - диаметр). ";
+	cin >> figureSide;
+	GeometricFigures* geometricFigures=new GeometricFigures(geomFigure, figureSide);
+	delete geometricFigures;
 }
-
 
 // Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"
 // Отладка программы: F5 или меню "Отладка" > "Запустить отладку"
