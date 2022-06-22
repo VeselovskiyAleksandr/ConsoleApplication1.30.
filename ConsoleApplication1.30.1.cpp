@@ -93,7 +93,7 @@ public:
 class ElfVillage {
 	int treesNumber = 0, numberBigBranches = 0;
 public:
-	Tree** tree = NULL;
+	Tree** tree = nullptr;
 	Tree* getTree(int index) {
 		return tree[index];
 	}
@@ -159,6 +159,7 @@ int main()
 	else if (index < 0) {
 		cout << "\nЭльфа с таким именем в деревне нет.";
 	}
+	delete elfVillage;
 }
 
 
