@@ -7,10 +7,6 @@
 #include <string>
 using namespace std;
 
-class Tree;
-class TreeBigBranche;
-class ElfVillage;
-
 class TreeMiddleBranche {
 	int elfName = 0;
 public:
@@ -108,7 +104,6 @@ public:
 			tree[i]->loadBigBr(innumberBigBranches);
 		}
 	}
-
 };
 
 int main()
@@ -159,6 +154,15 @@ int main()
 	else if (index < 0) {
 		cout << "\nЭльфа с таким именем в деревне нет.";
 	}
+	for (int i = 0; i < numTr; ++i) {
+		for (int j = 0; j < elfVillage->getTree(i)->getBigBr(); ++j) {			
+			for (int k = 0; k < elfVillage->getTree(i)->getbigBranche(j)->getMidBr(); ++k) {
+			delete elfVillage->getTree(i)->getbigBranche(j)->middleBranche[k];			
+				}
+			delete elfVillage->getTree(i)->getbigBranche(j);
+			}
+		delete elfVillage->getTree(i);
+		}
 	delete elfVillage;
 }
 
