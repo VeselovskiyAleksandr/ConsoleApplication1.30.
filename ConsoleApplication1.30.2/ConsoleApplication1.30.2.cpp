@@ -1,10 +1,11 @@
 ﻿// ConsoleApplication1.30.2.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
-//
+//Задача 2. Иерархия геометрических фигур.
 
 #include <iostream>
-#include <locale.h>
+#include <clocale>
 #include <ctime>
 #include <string>
+#include <cmath>
 using namespace std;
 
 enum class Colors {
