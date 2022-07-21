@@ -10,8 +10,9 @@
 using namespace std;
 
 class LineSegment {
-public:
+
 	double segment = 5;
+public:
 	void setSideLength(double length) {
 		segment = length;
 	}
@@ -22,11 +23,11 @@ public:
 };
 
 class GeometricFigures :public LineSegment {
-public:
+private:
 	double factor = atan(1), ratio = 1;
 	double  secondParametr = 0, square = 0, parametr = 0;
 	string figureName = "", colors = "";
-
+public:
 	void setFactor(double fact) {
 		factor = fact;
 	}
@@ -76,7 +77,7 @@ public:
 	}
 
 	GeometricFigures(double inFactor, double inRatio, double insecondParametr, double inSquare, string inColors, string infigureName) : figureName(infigureName), factor(inFactor), ratio(inRatio), square(inSquare), secondParametr(insecondParametr), colors(inColors) {
-		setParametr(segment);
+		setParametr(getSideLength());
 		if (infigureName == "circle") {
 			inFactor = atan(1); inRatio = 1; inColors = "blue";
 			setFactor(inFactor);
