@@ -6,6 +6,7 @@
 #include <string>
 #include <cmath>
 #include <cassert>
+#include <map>
 using namespace std;
 
 enum class Colors {
@@ -14,10 +15,25 @@ enum class Colors {
 
 constexpr const char* ColorsToString(Colors c) noexcept {
 	 switch (c) {
-	 case Colors::blue:return "blue";
-	 case Colors::red: return"red";
+	 case Colors::blue:return "blue";     //  Функцию constexpr const char* ColorsToString(Colors c) noexcept
+	 case Colors::red: return"red";        //Оставил для примера.
 	 case Colors::green:return"green";
 	 case Colors::yellow:return"yellow";
+	}
+}
+
+void StringToColors(string color, Colors figColor) {
+	if (color == "blue") {
+		figColor= Colors::blue;
+	}
+	else if (color == "red") {
+		figColor = Colors::red;
+	}
+	else if (color == "green") {
+		figColor = Colors::green;
+	}
+	else if (color == "yellow") {
+		figColor = Colors::yellow;
 	}
 }
 
@@ -31,10 +47,16 @@ double getParametr() {
 
 class GeometricFigures :public LineSegment {
 	double coordX = getParametr() / 2;
+	Colors figureColor=Colors::blue;
+	protected :
 	double sideSquare = getParametr()* getParametr();
 public:
-	double getSideSquare() {
-		return sideSquare;
+	void setColor(string figColor) {
+		StringToColors(figColor, figureColor);
+	}
+
+	Colors getColor() {
+		return figureColor;
 	}
 
 	double getCoordX() {
@@ -44,8 +66,7 @@ public:
 
 class Circle : public GeometricFigures {
 	double  factor = atan(1), ratio = 1;
-	double secondParametr = getParametr() * ratio, square = factor * getSideSquare();
-	string colorFigure= ColorsToString(Colors::blue);
+	double secondParametr = getParametr() * ratio, square = factor * sideSquare;
 public: 
 	double getSquare() {
 		return square;
@@ -58,16 +79,11 @@ public:
 	double getCoordY() {
 		return secondParametr/2;
 	}
-
-	string getColor() {
-		return colorFigure;
-	}
 };
 
 class  RegularTetragon : public GeometricFigures {
 	double factor = 1, ratio = 1;
-	double  secondParametr = getParametr() * ratio, square = factor * getSideSquare();
-	string colorFigure = ColorsToString(Colors::green);
+	double  secondParametr = getParametr() * ratio, square = factor * sideSquare;
 public:
 	double getSecondParametr() {
 		return secondParametr;
@@ -79,18 +95,13 @@ public:
 
 	double getCoordY() {
 		return secondParametr / 2;
-	}
-
-	string getColor() {
-		return colorFigure;
 	}
 };
 
 class Triangle : public GeometricFigures {
 public:
 	double factor = sqrt(3) / 4, ratio = sqrt(3) / 2;
-	double secondParametr = getParametr() * ratio, square = factor * getSideSquare();
-	string colorFigure = ColorsToString(Colors::yellow);
+	double secondParametr = getParametr() * ratio, square = factor * sideSquare;
 public:
 	double getSecondParametr() {
 		return secondParametr;
@@ -103,14 +114,9 @@ public:
 	double getCoordY() {
 		return secondParametr / 2;
 	}
-
-	string getColor() {
-		return colorFigure;
-	}
 };
 
 class Rectangle :public  GeometricFigures {
-	string colorFigure = ColorsToString(Colors::red);
 	double secondParametr = 0, coordY = 0;
 public:
 	void setHandInput(double secPar) {
@@ -128,38 +134,36 @@ public:
 	double getCoordY() {
 		return getSecondParametr()/2;
 	}
-
-	string getColor() {
-		return colorFigure;
-	}
 };
 
 int main()
 {
 	setlocale(LC_ALL, "Russian");
-	string geomFigure = "";
+	string geomFigure = "", figureColor="";
 	cout << "\nУкажите название фигуры: круг -  circle, квадрат - square, прямоугольник - rectangle, треугольник - triangle. ";
 	cin >> geomFigure;
+	cout << "\nУкажите цвет фигуры: синий - blue, жёлтый - yellow, зелёный - green, красный - red";
+		cin >> figureColor;
 	if (geomFigure == "circle") {
 		Circle* circle = new Circle();
+		circle->setColor(figureColor);
 		cout << "\n Площадь фигуры равна " << circle->getSquare();
-		cout << "\n Цвет                 " << circle->getColor();
 		cout << "\n Стороны описывающего прямоугольника: " << circle->getParametr() << " " << circle->getSecondParametr();
 		cout << "\n Центр описывающего прямоугольника: " << circle->getCoordX() << " " << circle->getCoordY();
 		delete circle;
 	}
 	else if (geomFigure == "square") {
 		RegularTetragon* regularTetragon = new  RegularTetragon();
+		regularTetragon->setColor(figureColor);
 		cout << "\n Площадь фигуры равна " << regularTetragon->getSquare();
-		cout << "\n Цвет                 " << regularTetragon->getColor();
 		cout << "\n Стороны описывающего прямоугольника: " << regularTetragon->getParametr() << " " << regularTetragon->getSecondParametr();
 		cout << "\n Центр описывающего прямоугольника: " << regularTetragon->getCoordX() << " " << regularTetragon->getCoordY();
 		delete regularTetragon;
 	}
 	else if (geomFigure == "triangle") {
 		Triangle* triangle = new  Triangle();
+		triangle->setColor(figureColor);
 		cout << "\n Площадь фигуры равна " << triangle->getSquare();
-		cout << "\n Цвет                 " << triangle->getColor();
 		cout << "\n Стороны описывающего прямоугольника: " << triangle->getParametr() << " " << triangle->getSecondParametr();
 		cout << "\n Центр описывающего прямоугольника: " << triangle->getCoordX()<< " " << triangle->getCoordY();
 		delete  triangle;
@@ -167,13 +171,13 @@ int main()
 	}
 	else if (geomFigure == "rectangle") {
 		Rectangle* rectangle = new Rectangle();
+		rectangle->setColor(figureColor);
 		double secPar = 0;
 		cout << "\nВведите длину второй стороны прямоугольника.";
 		cin >> secPar;
 		assert(secPar > 0);
 		rectangle->setHandInput(secPar);
 		cout << "\n Площадь фигуры равна " << rectangle->getSquare();
-		cout << "\n Цвет                 " << rectangle->getColor();
 		cout << "\n Стороны описывающего прямоугольника: " << rectangle->getParametr() << " " << rectangle->getSecondParametr();
 		cout << "\n Центр описывающего прямоугольника: " << rectangle->getCoordX() << " " << rectangle->getCoordY();
 		delete  rectangle;
